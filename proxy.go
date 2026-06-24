@@ -37,7 +37,7 @@ func proxyStdio(conn *websocket.Conn, stdin io.Reader, stdout io.Writer) error {
 }
 
 func copyReaderToWebSocket(conn *websocket.Conn, reader io.Reader) error {
-	buf := make([]byte, 32*1024)
+	buf := make([]byte, 8*1024)
 	for {
 		n, err := reader.Read(buf)
 		if n > 0 {
