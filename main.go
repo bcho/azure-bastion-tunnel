@@ -9,6 +9,7 @@ import (
 	"os"
 	"time"
 
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azidentity"
 )
 
@@ -31,9 +32,12 @@ func run(ctx context.Context, args []string) error {
 		return err
 	}
 
-	cred, err := azidentity.NewAzureCLICredential(nil)
-	if err != nil {
-		return fmt.Errorf("create Azure CLI credential: %w", err)
+	var cred azcore.TokenCredential
+	if os.Getenv(accessTokenCommandEnv) == "" {
+		cred, err = azidentity.NewAzureCLICredential(nil)
+		if err != nil {
+			return fmt.Errorf("create Azure CLI credential: %w", err)
+		}
 	}
 
 	armToken, err := getAccessToken(ctx, cred)
