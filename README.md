@@ -6,6 +6,14 @@
 az login
 ```
 
+To use another authentication mechanism, set `AZURE_BASTION_TUNNEL_ACCESS_TOKEN_COMMAND` to an executable. The executable is invoked without arguments, and its standard output is used as the Azure management access token (leading and trailing whitespace is removed):
+
+```sh
+export AZURE_BASTION_TUNNEL_ACCESS_TOKEN_COMMAND=/path/to/get-azure-access-token
+```
+
+When this variable is set, Azure CLI credential setup is skipped.
+
 ## Why use this instead of `az network bastion ssh`
 
 This tool is designed to fit into normal OpenSSH workflows:
